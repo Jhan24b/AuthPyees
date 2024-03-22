@@ -30,7 +30,12 @@ export const {
     async signIn({ user, account }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
-      const existingUser = await getUserById(user.id);
+      let usuario = '0'
+      if (user.id) {
+        usuario = user.id;
+      }
+      // const existingUser = await getUserById(user.id);
+      const existingUser = await getUserById(usuario);
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
       if (existingUser.isTwoFactorEnabled) {
@@ -56,7 +61,10 @@ export const {
 
       if (session.user) {
         session.user.name = token.name;
-        session.user.email = token.email;
+        // session.user.email = token.email;
+        if (token.email !== null && token.email !== undefined) {
+          session.user.email = token.email;
+        }
         session.user.isOAuth = token.isOAuth as boolean;
       }
 

@@ -25,6 +25,7 @@ export const settings = async (
     usuarioBuscar = user.id
   }
   const dbUser = await getUserById(usuarioBuscar);
+  // const dbUser = await getUserById(user.id);
 
   if (!dbUser) {
     return { error: "Unauthorized" }
